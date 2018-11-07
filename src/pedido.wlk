@@ -1,3 +1,6 @@
+import comercio.*
+import remera.*
+import comercio.*
 class Pedido {
 		var property remeras= []
 		var property sucursal

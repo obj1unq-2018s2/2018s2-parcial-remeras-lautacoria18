@@ -112,7 +112,7 @@ describe "remeras"{
 	
 		test "Test 4 C"{
 			
-			assert.equals(6, comercio1.cantidadDeRemerasDeColor("Blanco"))
+			assert.equals(6, comercio1.cantidadDeRemerasDeColor("Verde"))
 			
 		}
 	

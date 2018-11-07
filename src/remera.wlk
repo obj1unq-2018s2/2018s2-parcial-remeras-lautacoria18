@@ -1,3 +1,6 @@
+import pedido.*
+import sucursal.*
+import comercio.*
 	class RemeraLisa {
 		var property color
 		const property talle= 0

@@ -6,9 +6,9 @@ class Sucursal {
 	method costoTotalFacturadoPorSucursal() = pedidos.sum{pedido => pedido.precioTotal()}
 
 	method totalDeRemeras() {
-		var remerasTotales=[]
-			pedidos.foreach{pedido =>  remerasTotales.add(pedido.remeras()) }
-			return remerasTotales}
+		
+			return pedidos.flatMap{pedido =>  pedido.remeras() }}
+			
 
 	method pedidoMasCaroDeSucursal() = pedidos.max{pedido => pedido.precioTotal()}
 

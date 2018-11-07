@@ -1,3 +1,6 @@
+import pedido.*
+import remera.*
+import remera.*
 class Comercio {
 	
 	var property sucursales= []
@@ -13,16 +16,20 @@ class Comercio {
 	
 	
 	method totalDeRemerasEnComercio() {
-		var remerasTotalesComercio=[]
 		
-	sucursales.foreach{sucursal =>  remerasTotalesComercio.add(sucursal.totalDeRemeras()) }
+		
 	
-	return remerasTotalesComercio
+	 return pedidos.flatMap{pedido =>  pedido.remeras() }
+	
 	}
 	
+	method remerasDeColor() {
+		
+		return self.totalDeRemerasEnComercio().flatMap{remera => remera.colores()}
+	}
 	
 	method cantidadDeRemerasDeColor(color) = 
-	self.totalDeRemerasEnComercio().count{remera => remera.color() == color}
+	self.remerasDeColor().count{colorDeRemera => colorDeRemera == color}
 	
 	
 	method pedidoMasCaroDeComercio()=  sucursales.max{sucursal => sucursal.pedidoMasCaroDeSucursal()}	
@@ -32,7 +39,7 @@ class Comercio {
 	
 		var tallesTotales= []
 	
-				self.totalDeRemerasEnComercio().foreach{remera => tallesTotales.add(remera.talle())}
+				self.totalDeRemerasEnComercio().map{remera => tallesTotales.add(remera.talle())}
 				
 				return tallesTotales
 				
@@ -41,11 +48,11 @@ class Comercio {
 	method  tallesSinPedidos(){
 		
 		var talles= new Range  (32, 48)
-		var tallesSinPedir= []
+	
 		
-		talles.foreach{ talle=> if (not(talles.contains(talle))) tallesSinPedir.add(talle)}
 		
-		return tallesSinPedir
+		return pedidos.flatMap{pedido =>  pedido.remeras() }
+		
 		
 	}	
 	
