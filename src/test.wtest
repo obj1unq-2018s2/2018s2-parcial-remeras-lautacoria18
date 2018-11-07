@@ -1,0 +1,126 @@
+import remera.*
+import sucursal.*
+import pedido.*
+import comercio.*
+describe "remeras"{
+	
+	var disney= new Empresa(costoDerechosDeAutor= 100)
+	var dreamworks= new Empresa(costoDerechosDeAutor= 200)
+	var warner= new Empresa(costoDerechosDeAutor= 300)
+	var remeraLisa1= new RemeraLisa(talle=42, color= "Verde")
+	var remeraLisa2= new RemeraLisa(talle=42, color= "Verde")
+	var remeraLisa3= new RemeraLisa(talle=42, color= "Verde")
+	var remeraBordada1= new RemeraBordada(talle= 38, color= "Blanco", bordados= ["Blanco", "Azul"])
+	var remeraBordada2= new RemeraBordada(talle= 38, color= "Blanco", bordados= ["Blanco", "Azul"])
+	var remeraBordada3= new RemeraBordada(talle= 38, color= "Blanco", bordados= ["Blanco", "Azul"])
+	var remeraEstampada1= new RemeraEstampada(talle= 38, color= "Blanco", empresa=warner, alto=5, ancho= 5)
+	var remeraEstampada2=  new RemeraEstampada(talle= 38, color= "Blanco", empresa=warner, alto=5, ancho= 5)
+	var remeraEstampada3= new RemeraEstampada(talle= 38, color= "Blanco", empresa=warner, alto=5, ancho= 5)
+	var pedido1= new Pedido()
+	var pedido2= new Pedido()
+	var pedido3 = new Pedido()
+	var sucursalVarela= new Sucursal()
+	var sucursalSolano= new Sucursal()
+	var comercio1= new Comercio()
+
+	
+	fixture {
+		///Punto 2 A
+			sucursalVarela.cantidadParaElDescuento(3)
+			sucursalVarela.empresasConConvenio([warner, disney])
+			sucursalVarela.pedidos([pedido1])
+			pedido1.sucursal(sucursalVarela)
+			pedido1.remeras([remeraLisa1, remeraLisa2, remeraLisa3])
+			
+		///Punto 2 B
+			pedido2.sucursal(sucursalVarela)
+			pedido2.remeras([remeraBordada1, remeraBordada2, remeraBordada3])
+			
+		// Punto 2 C
+
+			pedido3.sucursal(sucursalVarela)
+			pedido3.remeras([remeraEstampada1, remeraEstampada2, remeraEstampada3])
+			
+			
+		//Punto 3 B
+		
+			comercio1.sucursales([sucursalVarela, sucursalSolano])
+			sucursalSolano.pedidos([pedido2])
+			
+		//Punto 4
+		
+			sucursalSolano.pedidos([pedido3, pedido2])
+			
+		
+		
+		
+	}
+	
+	test "Test 1 A"{
+		
+		assert.equals(110, remeraLisa1.costoTotal())
+		
+		
+	}
+	
+	test "Test 1 B"{
+		
+		assert.equals(100, remeraBordada1.costoTotal())
+		
+	}
+	
+	test "Test 1 C"{
+		
+		assert.equals(392.5, remeraEstampada1.costoTotal())
+	}
+	
+	test "Test 2 A" {
+		
+		
+		assert.equals(297, pedido1.precioTotal())
+		
+		
+	}	
+	
+		test "Test 2 B" {
+		
+		
+		assert.equals(294, pedido2.precioTotal())
+		
+		
+	}	
+	
+	
+		test "Test 2 C" {
+		
+		
+		assert.equals(942, pedido3.precioTotal())
+		
+		
+	}	
+	
+		test "Test 3 B"{
+			
+			assert.equals(1533, comercio1.totalFacturadoPorComercio())
+		}
+		
+		test "Test 3 C"{
+			
+			assert.equals(1236, comercio1.totalFacturadoPorSucursal(sucursalSolano))
+			
+		}
+	
+		test "Test 4 C"{
+			
+			assert.equals(6, comercio1.cantidadDeRemerasDeColor("Blanco"))
+			
+		}
+	
+}
+
+
+
+
+
+
+
